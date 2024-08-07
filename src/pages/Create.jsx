@@ -23,7 +23,7 @@ const Create = () => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5050/api/createCar', formData, {
+      await axios.post('https://assignment-backend-bu2u.onrender.com/api/createCar', formData, {
         withCredentials: true
       });
       navigate('/dashboard');

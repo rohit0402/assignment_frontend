@@ -7,7 +7,7 @@ const Home = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:5050/api/listCars", {
+        const response = await axios.get("https://assignment-backend-bu2u.onrender.com/api/listCars", {
           withCredentials: true,
         });
         setData(response.data.cars);

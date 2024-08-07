@@ -16,7 +16,7 @@ const Edit = () => {
   useEffect(() => {
     const fetchCarDetails = async () => {
       try {
-        const response = await axios.get(`http://localhost:5050/api/Car/${carId}`);
+        const response = await axios.get(`https://assignment-backend-bu2u.onrender.com/api/Car/${carId}`);
         setFormData(response.data);
       } catch (error) {
         console.error('Error fetching car details:', error.message);
@@ -33,7 +33,7 @@ const Edit = () => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:5050/api/editCar/${carId}`, formData, {
+      await axios.put(`https://assignment-backend-bu2u.onrender.com/api/editCar/${carId}`, formData, {
         withCredentials: true
       });
       navigate('/dashboard');

@@ -13,7 +13,7 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const res = await axios.post("http://localhost:5050/api/login", {
+      const res = await axios.post("https://assignment-backend-bu2u.onrender.com/api/login", {
         email,
         password,
       }, {

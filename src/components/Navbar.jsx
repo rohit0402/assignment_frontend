@@ -9,7 +9,7 @@ const Navbar = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.get("http://localhost:5050/api/logout", { withCredentials: true });
+      await axios.get("https://assignment-backend-bu2u.onrender.com/api/logout", { withCredentials: true });
       logout();
       navigate("/signup");
     } catch (error) {

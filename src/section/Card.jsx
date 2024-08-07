@@ -6,7 +6,7 @@ const Card = ({ element }) => {
 
   const handleDelete = async () => {
     try {
-      await axios.delete(`http://localhost:5050/api/deleteCar/${element._id}`, {
+      await axios.delete(`https://assignment-backend-bu2u.onrender.com/api/deleteCar/${element._id}`, {
         withCredentials: true
       });
       window.location.reload(); 

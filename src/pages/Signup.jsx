@@ -13,7 +13,7 @@ const Signup = () => {
     e.preventDefault();
 
     try {
-      const res = await axios.post("http://localhost:5050/api/signup", { email, password });
+      const res = await axios.post("https://assignment-backend-bu2u.onrender.com/api/signup", { email, password });
       const data = res.data;
 
       if (res.status === 200) {
