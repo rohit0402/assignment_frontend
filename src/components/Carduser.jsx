@@ -13,14 +13,13 @@ export const Carduser = ({element}) => {
       <div>
         <div className=" flex m-1 gap-3 items-center justify-between">
           <span className="text-lg font-bold">{element.model}</span>
-          <span>Year:{element.manufacturingYear}</span>
+          <span>Year:{element.year}</span>
         </div>
         <div className="flex justify-between items-center">
-          <span>₹{element.price}</span>
+          <span>Price:₹{element.price}</span>
           
           <button
             className="bg-slate-500 px-3 py-1 rounded-md font-bold"
-            // onClick={() => add_to_cart(product)}
           >
             Rent
           </button>

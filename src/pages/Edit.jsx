@@ -1,11 +1,52 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import axios from 'axios';
 
 const Edit = () => {
+  const navigate = useNavigate();
+  const { carId } = useParams(); 
+
+  const [formData, setFormData] = useState({
+    model: '',
+    carImage: '',
+    quantity: '',
+    price: '',
+    year: ''
+  });
+  console.log(carId);
+  useEffect(() => {
+    const fetchCarDetails = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5050/api/Car/${carId}`);
+        setFormData(response.data);
+      } catch (error) {
+        console.error('Error fetching car details:', error.message);
+      }
+    };
+    fetchCarDetails();
+  }, [carId]); 
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.put(`http://localhost:5050/api/editCar/${carId}`, formData, {
+        withCredentials: true
+      });
+      navigate('/dashboard');
+    } catch (error) {
+      console.error('Error updating car:', error.message);
+    }
+  };
+
   return (
     <div className="flex justify-center py-8 mt-9 h-screen">
       <form
-        // onSubmit={handleFormSubmit}
+        onSubmit={handleFormSubmit}
         className="bg-white rounded-lg p-5 shadow-2xl shadow-slate-500 flex flex-col h-fit gap-3 w-[60vw] lg:w-[20vw] text-sm"
       >
         <span className="text-lg text-gray-600 -mb-1 text-center">
@@ -13,36 +54,53 @@ const Edit = () => {
         </span>
 
         <div>
-          <label htmlFor="name" className="block text-gray-600">
+          <label htmlFor="model" className="block text-gray-600">
             Car Model
           </label>
           <input
             type="text"
-            name="name"
-            id="name"
+            name="model"
+            id="model"
             className="outline-none border rounded-md px-3 w-64 py-2 focus:border-yellow-500 text-black"
             autoComplete="off"
             placeholder="Enter Car Model"
             required
-            // value={formData.name}
-            // onChange={handleInputChange}
+            value={formData.model}
+            onChange={handleInputChange}
           />
         </div>
 
         <div>
-          <label htmlFor="company" className="block text-gray-600">
-            Company Name
+          <label htmlFor="carImage" className="block text-gray-600">
+            Car Image
           </label>
           <input
             type="text"
-            name="company"
-            id="company"
+            name="carImage"
+            id="carImage"
             className="outline-none border rounded-md px-3 py-2 w-64 focus:border-yellow-500 text-black"
             autoComplete="off"
-            placeholder="Enter Company Name"
+            placeholder="Paste Image Url"
             required
-            // value={formData.company}
-            // onChange={handleInputChange}
+            value={formData.carImage}
+            onChange={handleInputChange}
+          />
+        </div>
+
+        <div>
+          <label htmlFor="quantity" className="block text-gray-600">
+            Quantity
+          </label>
+          <input
+            type="number"
+            name="quantity"
+            id="quantity"
+            className="outline-none border rounded-md px-3 w-64 py-2 focus:border-yellow-500 text-black"
+            autoComplete="off"
+            placeholder="Enter Number of Cars"
+            required
+            value={formData.quantity}
+            onChange={handleInputChange}
           />
         </div>
 
@@ -54,12 +112,12 @@ const Edit = () => {
             type="number"
             name="price"
             id="price"
-            className="outline-none border rounded-md px-3 w-64  py-2 focus:border-yellow-500 text-black"
+            className="outline-none border rounded-md px-3 w-64 py-2 focus:border-yellow-500 text-black"
             autoComplete="off"
             placeholder="Enter Price"
             required
-            // value={formData.price}
-            // onChange={handleInputChange}
+            value={formData.price}
+            onChange={handleInputChange}
           />
         </div>
 
@@ -69,7 +127,7 @@ const Edit = () => {
           </label>
           <input
             type="text"
-            name="manufacturingYear"
+            name="year"
             id="year"
             className="outline-none border rounded-md px-3 w-64 py-2 focus:border-yellow-500 text-black"
             autoComplete="off"
@@ -77,12 +135,12 @@ const Edit = () => {
             pattern="\d{4}"
             maxLength="4"
             required
-            // value={formData.manufacturingYear}
-            // onChange={handleInputChange}
+            value={formData.year}
+            onChange={handleInputChange}
           />
         </div>
 
-        <div className=" flex  justify-between items-center">
+        <div className="flex justify-between items-center">
           <button
             type="submit"
             className="outline-none border rounded-md px-3 py-2 text-black bg-yellow-500 hover:bg-yellow-300 cursor-pointer"

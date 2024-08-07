@@ -10,9 +10,9 @@ export const AuthProvider = ({ children }) => {
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
-    const token = Cookies.get('token'); // Check if the token exists in cookies
-    const adminStatus = localStorage.getItem('isAdmin') === 'true'; // Get admin status from local storage
-    const loggedInStatus = localStorage.getItem('isLoggedIn') === 'true'; // Get login status from local storage
+    const token = Cookies.get('token'); 
+    const adminStatus = localStorage.getItem('isAdmin') === 'true';
+    const loggedInStatus = localStorage.getItem('isLoggedIn') === 'true'; 
     if (token && loggedInStatus) {
       setIsLoggedIn(true);
       setIsAdmin(adminStatus);
@@ -23,17 +23,17 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = (token, adminStatus) => {
-    Cookies.set('token', token, { expires: 1 }); // Store token in cookies
-    localStorage.setItem('isAdmin', adminStatus.toString()); // Store admin status in local storage
-    localStorage.setItem('isLoggedIn', 'true'); // Store login status in local storage
+    Cookies.set('token', token, { expires: 1 }); 
+    localStorage.setItem('isAdmin', adminStatus.toString()); 
+    localStorage.setItem('isLoggedIn', 'true');
     setIsLoggedIn(true);
     setIsAdmin(adminStatus);
   };
 
   const logout = () => {
-    Cookies.remove('token'); // Remove token from cookies
-    localStorage.removeItem('isAdmin'); // Remove admin status from local storage
-    localStorage.removeItem('isLoggedIn'); // Remove login status from local storage
+    Cookies.remove('token'); 
+    localStorage.removeItem('isAdmin'); 
+    localStorage.removeItem('isLoggedIn'); 
     setIsLoggedIn(false);
     setIsAdmin(false);
   };
@@ -44,3 +44,5 @@ export const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   );
 };
+
+export default AuthContext;
