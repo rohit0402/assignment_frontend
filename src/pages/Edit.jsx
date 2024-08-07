@@ -13,7 +13,6 @@ const Edit = () => {
     price: '',
     year: ''
   });
-  console.log(carId);
   useEffect(() => {
     const fetchCarDetails = async () => {
       try {
