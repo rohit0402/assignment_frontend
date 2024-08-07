@@ -1,42 +1,64 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { useAuth } from '../AuthContext';
 
 const Signup = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+  const { login } = useAuth();
+
+  const handleSignup = async (e) => {
+    e.preventDefault();
+
+    try {
+      const res = await axios.post("http://localhost:5050/api/signup", { email, password });
+      const data = res.data;
+
+      if (res.status === 200) {
+        login(data.token, data.isAdmin); // Set token and update auth state
+        navigate("/login");
+      } else if (res.status === 500 || res.status === 400) {
+        console.error(data.message);
+      }
+    } catch (error) {
+      console.error('Error during signup:', error.response?.data || error.message);
+    }
+  };
+
   return (
-    <>
-     <div className='flex justify-center items-center h-screen '>
-     <form
-    //   onSubmit={handleLogin}
-        action=""
+    <div className='flex justify-center items-center h-screen'>
+      <form
+        onSubmit={handleSignup}
         className="bg-white rounded-lg p-5 shadow-2xl shadow-slate-500 flex flex-col gap-3 w-[60vw] lg:w-[20vw] text-sm"
       >
-        <span className=" text-lg text-gray-600 -mb-1 text-center">Signup</span>
-
+        <span className="text-lg text-gray-600 -mb-1 text-center">Signup</span>
         <input
           type="email"
-          name="email "
+          name="email"
           id="email"
-          className="outline-none border rounded-md px-3 py-2 focus:border-yellow-500 text-black "
+          className="outline-none border rounded-md px-3 py-2 focus:border-yellow-500 text-black"
           autoComplete="off"
           placeholder="enter email"
           required
-        //   value={email}
-        //   onChange={(e) => setEmail(e.target.value)}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
         <input
           type="password"
-          name="password "
+          name="password"
           id="password"
-          className="outline-none border rounded-md px-3 py-2 focus:border-yellow-500 text-black "
+          className="outline-none border rounded-md px-3 py-2 focus:border-yellow-500 text-black"
           autoComplete="off"
           placeholder="enter password"
           required
-        //   value={password}
-        //   onChange={(e) => setPassword(e.target.value)}
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
         />
         <button
           type="submit"
-          className=" outline-none border rounded-md px-3 py-2 text-black bg-yellow-500 hover:bg-yellow-300 cursor-pointer"
+          className="outline-none border rounded-md px-3 py-2 text-black bg-yellow-500 hover:bg-yellow-300 cursor-pointer"
         >
           Signup
         </button>
@@ -44,15 +66,14 @@ const Signup = () => {
           <span>Or</span>
           <Link
             to="/login"
-            className=" text-black hover:underline hover:text-blue-700 cursor-pointer"
+            className="text-black hover:underline hover:text-blue-700 cursor-pointer"
           >
             Login
           </Link>
         </p>
       </form>
-     </div>
-    </>
-  )
-}
+    </div>
+  );
+};
 
-export default Signup
+export default Signup;
