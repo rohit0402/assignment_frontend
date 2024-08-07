@@ -17,7 +17,6 @@ const Signup = () => {
       const data = res.data;
 
       if (res.status === 200) {
-        login(data.token, data.isAdmin); 
         navigate("/login");
       } else if (res.status === 500 || res.status === 400) {
         console.error(data.message);
