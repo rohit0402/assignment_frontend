@@ -18,7 +18,6 @@ const Dashboard = () => {
         });
         setData(response.data.cars);
 
-        // Calculate total quantity and price
         const quantity = response.data.cars.reduce(
           (sum, car) => sum + car.quantity,
           0

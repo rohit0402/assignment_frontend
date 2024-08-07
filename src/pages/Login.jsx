@@ -17,12 +17,11 @@ const Login = () => {
         email,
         password,
       }, {
-        withCredentials: true // Important for cookies
+        withCredentials: true 
       });
 
       const data = res.data;
       if (res.status === 200) {
-        // Call login function from context with admin status
         login(data.token, data.isAdmin);
 
         if (data.isAdmin) {

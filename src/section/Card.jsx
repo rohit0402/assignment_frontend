@@ -9,7 +9,7 @@ const Card = ({ element }) => {
       await axios.delete(`http://localhost:5050/api/deleteCar/${element._id}`, {
         withCredentials: true
       });
-      window.location.reload(); // This will reload the page to reflect changes
+      window.location.reload(); 
     } catch (error) {
       console.error('Error deleting car:', error.message);
     }
@@ -28,7 +28,7 @@ const Card = ({ element }) => {
         <div className="flex m-1 gap-3">
           <span className="text-lg font-bold">{element.model}</span>
           <span>₹{element.price}</span>
-          <span>Year: {element.year}</span> {/* Ensure correct field name */}
+          <span>Year: {element.year}</span>
         </div>
         <div className="flex justify-between items-center">
           <span>Quantity: {element.quantity}</span>

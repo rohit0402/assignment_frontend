@@ -1,4 +1,3 @@
-// Pagination.jsx
 import React from 'react';
 
 const Pagination = ({ totalPages, currentPage, onPageChange }) => {
